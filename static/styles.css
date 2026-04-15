@@ -1,0 +1,52 @@
+/* CSS RESET */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* GENERAL STYLES */
+
+body {
+  min-height: 100dvh;
+  max-width: 100dvw;
+}
+
+header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+header * {
+  margin: 0.25rem;
+}
+
+h1 {
+  text-align: center;
+  font-size: 2.25rem;
+}
+
+thead {
+  position: sticky;
+  top: 0;
+}
+
+.page-info {
+  display: grid;
+  grid-template-columns: auto auto;
+}
+
+.page-info-label,
+.stats-label {
+  font-weight: bold;
+}
+
+.stats-box {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  max-width: fit-content;
+}
+
+.stats-box * {
+  margin: 0.15rem;
+}

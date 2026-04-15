@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Zenon Mesić">
+  <meta
+    name="description"
+    content="A tabular list of jobs collected from the Croatian employment
+      agency for Brodsko-Posavska County, structured for effective filtering
+      and sorting."
+  >
+
+  <!-- DataTables -->
+  <link rel="stylesheet" href="../static/datatables.css">
+  <script src="../static/datatables.js"></script>
+
+  <!-- JavaScript -->
+  <script src="../static/script.js"></script>
+   
+  <!-- CSS -->
+  <link rel="stylesheet" href="../static/styles.css">
+
+  <title>HZZ Jobs in Brodsko-Posavska County</title>
+</head>
+<body>
+  <header>
+    <h1>HZZ Jobs in Brodsko-Posavska County</h1>
+    <div class="page-info">
+        <div class="page-info-label">Jobs scrapped from:</div>
+        <a
+          class="page-info-value"
+          href="https://burzarada.hzz.hr/"
+          target="_blank"
+        >
+          HZZ Burza rada
+        </a>
+        <div class="page-info-label">Last updated:</div> 
+        <time class="page-info-value" datetime="{{ page_info_datetime }}">
+          {{ page_info_last_updated }}
+        </time>
+        <div class="page-info-label">Repository:</div> 
+        <a
+          class="page-info-value"
+          href="https://github.com/zenon-mesic/hzz_job_postings"
+          target="_blank"
+        >
+          GitHub
+        </a>
+    </div>
+  </header>
+
+  <main>
+    <div class="stats-box">
+        <div class="stats-label">Total jobs:</div>
+        <div class="stats-value">{{ total_jobs }}</div>
+        <div class="stats-percent"></div>
+
+        <div class="stats-label">In Slavonski Brod:</div>
+        <div class="stats-value">{{ jobs_in_sb }}</div>
+        <div class="stats-percent">({{ jobs_in_sb_pct }})</div>
+
+        <div class="stats-label">Unlimited contract:</div>
+        <div class="stats-value">{{ unlimited_jobs }}</div>
+        <div class="stats-percent">({{ unlimited_jobs_pct }})</div>
+
+        <div class="stats-label">Unlimited possible:</div>
+        <div class="stats-value">{{ unlimited_possible_jobs }}</div>
+        <div class="stats-percent">({{ unlimited_possible_jobs_pct }})</div>
+
+        <div class="stats-label">Full-time:</div>
+        <div class="stats-value">{{ full_time_jobs }}</div>
+        <div class="stats-percent">({{ full_time_jobs_pct }})</div>
+
+        <div class="stats-label">Driver's License:</div>
+        <div class="stats-value">{{ drivers_license_jobs }}</div>
+        <div class="stats-percent">({{ drivers_license_jobs_pct }})</div>
+    </div>
+
+    <table id="jobsTable" class="display">
+      <thead>
+        <tr>
+          <th scope="col">Title</th>
+          <th scope="col">Location</th>
+          <th scope="col">Unlimited</th>
+          <th scope="col">Full-time</th>
+          <th scope="col">Driver's License</th>
+          <th scope="col">Date published</th>
+          <th scope="col">Apply until</th>
+          <th scope="col">Employer</th>
+          <th scope="col">Details</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{ title }}</td>
+          <td>{{ location }}</td>
+          <td>{{ unlimited }}</td>
+          <td>{{ full_time }}</td>
+          <td>{{ drivers_license }}</td>
+          <td>{{ date_added }}</td>
+          <td>{{ date_apply_end }}</td>
+          <td>{{ employer }}</td>
+          <td>{{ link }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </main>
+</html>
