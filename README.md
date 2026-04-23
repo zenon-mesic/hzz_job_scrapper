@@ -15,7 +15,9 @@ Distributing data from Croatian employment office website to third-parties is pr
 
 ## Usage
 `python3 main.py`
+
 `python3 -m http.server 8000`
+
 `open http://localhost:8000`
 
 ## Project Structure
