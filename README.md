@@ -1,7 +1,7 @@
 # HZZ Job Scrapper
 
 ## Description
-Scraps jobs in Brodsko-posavska county listed on the Croatian employment office website and creates a web page (`output/index.html`) with a table overview of that allows quick filtering.
+Scraps jobs in Brodsko-posavska county listed on the Croatian employment office website and creates a web page (`output/index.html`) with a table overview that allows quick filtering.
 
 ## Legal Notice
 Distributing data from Croatian employment office website to third-parties is prohibited without written consent. Read their [Terms and Services](https://www.hzz.hr/uvjeti-koristenja/) for more info.
@@ -18,7 +18,7 @@ Distributing data from Croatian employment office website to third-parties is pr
 
 `python3 -m http.server 8000`
 
-`open http://localhost:8000`
+`open http://localhost:8000`, then navigate to `output` folder
 
 ## Project Structure
 Folder `static` contains:
