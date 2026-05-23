@@ -130,6 +130,22 @@ def insert_db_rows_into_html(rows: list[dict[str, Any]], html: str) -> str:
     return html
 
 
+async def fetch_jobs_details(jobs: list[Job]) -> None:
+    """Runs fetch_details Job method on all jobs in the list asynchronously"""
+
+    async_tasks = []
+    for job in jobs:
+        task = asyncio.to_thread(job.fetch_details)
+        async_tasks.append(task)
+    try:
+        results = await asyncio.gather(*async_tasks, return_exceptions=True)
+        for job, result in zip(jobs, results):
+            if isinstance(result, Exception):
+                logging.exception(f"HTTP GET failed for {job.id}")
+    except Exception as error:
+        logging.exception(error)
+
+
 async def update_database(
     db_filepath: str, xml_jobs: list[Job]
 ) -> tuple[list[dict], dict]:
@@ -149,14 +165,7 @@ async def update_database(
         db.delete_expired_jobs()
         db.delete_removed_jobs(xml_jobs)
         xml_jobs = db.pop_existing_jobs(xml_jobs)
-        async_tasks = []
-        for job in xml_jobs:
-            task = asyncio.to_thread(job.fetch_details)
-            async_tasks.append(task)
-        try:
-            await asyncio.gather(*async_tasks)
-        except Exception as error:
-            logging.exception(error)
+        await fetch_jobs_details(xml_jobs)
         db.insert_new_jobs(xml_jobs)
         db_jobs: list[dict[str, Any]] = db.select_all_jobs()
         db_stats: dict[str, int] = db.get_statistics()
@@ -217,7 +226,8 @@ async def main() -> None:
     logging.info("Daily update started")
     hzz_job_xml: str = Job.fetch_job_xml()
     if hzz_job_xml == "":
-        return  # fetch failed
+        logging.exception("Failed to fetch RSS")
+        return
     xml_jobs: list[Job] = Job.extract_jobs(hzz_job_xml)
     db_jobs, db_stats = await update_database("jobs.db", xml_jobs)
     create_html("templates/template.html", "output/index.html", db_jobs, db_stats)
